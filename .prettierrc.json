@@ -1,0 +1,5 @@
+{
+  "bracketSameLine": true,
+  "endOfLine": "auto",
+  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"]
+}
