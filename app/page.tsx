@@ -14,6 +14,7 @@ export default async function Home() {
         {user && (
           <ul className="flex flex-col gap-1">
             <li>{user.name}</li>
+            <li>{user.id}</li>
             {user.image && (
               <Image
                 src={user.image}

@@ -9,8 +9,6 @@ import DiscordProvider from "next-auth/providers/discord";
 
 const scopes = ["identify", "email"];
 
-// You'll need to import and pass this
-// to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
 export const config = {
   providers: [
     DiscordProvider({
@@ -18,10 +16,23 @@ export const config = {
       clientSecret: process.env.DISCORD_CLIENT_SECRET ?? "",
       authorization: { params: { scope: scopes.join(" ") } },
     }),
-  ], // rest of your config
+  ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token?.picture?.includes("discord")) {
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: token.sub,
+          },
+        };
+      }
+      return session;
+    },
+  },
 } satisfies NextAuthOptions;
 
-// Use it in server contexts
 export function auth(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
