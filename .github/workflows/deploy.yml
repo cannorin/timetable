@@ -43,7 +43,7 @@ jobs:
 
           echo 'DIRECT_DATABASE_URL=${{ steps.create-branch.outputs.db_url }}' >> .env
 
-      - name: Check if Prisma schema is modified
+      - name: Check If Prisma Schema is Modified
         uses: dorny/paths-filter@v2
         id: changes
         with:
@@ -51,11 +51,15 @@ jobs:
             prisma:
               - 'prisma/**'
 
+      - name: Install Prisma
+        if: steps.changes.outputs.prisma == 'true'
+        run: npm install
+
       - name: Run Prisma Migrate
         if: steps.changes.outputs.prisma == 'true'
         run: |
-          npx prisma generate
-          npx prisma migrate deploy
+          npm run gen
+          npm run migrate:prod
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
