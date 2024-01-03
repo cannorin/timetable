@@ -2,10 +2,12 @@
 
 Timetable management tool for VR/URL music events.
 
+<!--
 ## URLs
 
 - production: https://timetable.7colou.red
 - preview: https://prev.timetable.7colou.red
+-->
 
 ## Architecture
 
