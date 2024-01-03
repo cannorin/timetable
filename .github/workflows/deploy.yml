@@ -35,7 +35,7 @@ jobs:
           database: ${{ secrets.PGDATABASE }}
           prisma: true
 
-      - name: Run Prisma Migrate
+      - name: Write Database URLs to .env
         run: |
           touch .env
 
@@ -43,6 +43,17 @@ jobs:
 
           echo 'DIRECT_DATABASE_URL=${{ steps.create-branch.outputs.db_url }}' >> .env
 
+      - name: Check if Prisma schema is modified
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            prisma:
+              - 'prisma/**'
+
+      - name: Run Prisma Migrate
+        if: steps.changes.outputs.prisma == 'true'
+        run: |
           npx prisma generate
           npx prisma migrate deploy
 
