@@ -49,12 +49,12 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Deploy Project Artifacts to Vercel (Preview)
+      - name: Deploy Project to Vercel (Preview)
         id: deploy-prev
         if: steps.branch-name.outputs.current_branch != 'main'
         run: echo preview_url=$(vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }}) >> $GITHUB_OUTPUT
 
-      - name: Deploy Project Artifacts to Vercel (Production)
+      - name: Deploy Project to Vercel (Production)
         if: steps.branch-name.outputs.current_branch == 'main'
         run: vercel deploy --yes --prod --token=${{ secrets.VERCEL_TOKEN }}
 

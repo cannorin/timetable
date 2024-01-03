@@ -6,7 +6,7 @@ on:
 
 jobs:
   clean:
-    if: github.head_ref != 'main' && github.head_ref != 'prev'
+    if: github.head_ref != 'main'
     runs-on: ubuntu-latest
     permissions: write-all
     environment: default
