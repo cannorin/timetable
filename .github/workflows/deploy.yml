@@ -63,5 +63,6 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Vercel Preview URL :rocket: : ${{ steps.deploy-prev.outputs.preview_url }}
-            Neon branch :elephant: : https://console.neon.tech/app/projects/${{ secrets.NEON_PROJECT_ID }}/branches/${{ steps.branch-name.outputs.current_branch }}
+            * Vercel Preview URL: ${{ steps.deploy-prev.outputs.preview_url }}
+              - add it to the allowed redirect URIs on https://discord.com/developers/applications/
+            * Neon branch '${{ steps.branch-name.outputs.current_branch }}' is successfully created
