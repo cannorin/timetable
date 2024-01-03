@@ -1,3 +1,5 @@
+import "server-only";
+
 import type {
   GetServerSidePropsContext,
   NextApiRequest,
@@ -6,7 +8,7 @@ import type {
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import { upsertDiscordUser } from "./user";
+import { prisma } from "./prisma";
 
 const scopes = ["identify", "email"];
 
@@ -34,8 +36,15 @@ export const config = {
     },
   },
   events: {
-    async signIn({ user, isNewUser }) {
-      if (isNewUser !== false) void upsertDiscordUser(user);
+    async signIn({ user }) {
+      const { id, name, email, image: avatar } = user;
+      if (id && name && email && avatar) {
+        await prisma.user.upsert({
+          where: { id },
+          update: { name, email, avatar },
+          create: { name, id, email, avatar },
+        });
+      }
     },
   },
 } satisfies NextAuthOptions;

@@ -1,15 +1,9 @@
 "use server";
 
-import { Session } from "next-auth";
-import { prisma } from "./prisma";
+import { auth } from "./auth";
 
-export async function upsertDiscordUser(user: Session["user"]) {
-  const { id: discord_id, name, email, image: avatar } = user;
-  if (discord_id && name && email && avatar) {
-    await prisma.user.upsert({
-      where: { discord_id },
-      update: { name, email, avatar },
-      create: { name, discord_id, email, avatar },
-    });
-  }
+export async function getCurrentUserId() {
+  const session = await auth();
+  if (!session || !session.user.id) return null;
+  return session.user.id;
 }
