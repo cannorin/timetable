@@ -1,0 +1,36 @@
+name: Clean Neon Branch
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  clean:
+    if: github.head_ref != 'main' && github.head_ref != 'prev'
+    runs-on: ubuntu-latest
+    permissions: write-all
+    environment: default
+
+    steps:
+      - name: Delete Neon Branch
+        id: delete-branch
+        continue-on-error: true
+        uses: neondatabase/delete-branch-action@v2
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          branch_id: ${{ github.head_ref }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+
+      - name: Comment on Pull Request (Failure)
+        if: ${{ steps.delete-branch.outcome == 'failure' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Neon branch '${{ github.head_ref }}' is **NOT** deleted :warning:
+
+      - name: Comment on Pull Request (Success)
+        if: ${{ steps.delete-branch.outcome == 'success' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Neon branch '${{ github.head_ref }}' is successfully deleted :skull:
