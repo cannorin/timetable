@@ -6,6 +6,7 @@ import type {
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import { upsertDiscordUser } from "./user";
 
 const scopes = ["identify", "email"];
 
@@ -19,13 +20,15 @@ export const config = {
   ],
   callbacks: {
     async session({ session, token }) {
-      if (token?.picture?.includes("discord")) {
+      if (token?.picture?.includes("discord") && token.sub) {
+        const user = {
+          ...session.user,
+          id: token.sub,
+        };
+        await upsertDiscordUser(user);
         return {
           ...session,
-          user: {
-            ...session.user,
-            id: token.sub,
-          },
+          user,
         };
       }
       return session;
