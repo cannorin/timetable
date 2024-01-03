@@ -15,10 +15,10 @@ jobs:
       - name: Delete Neon Branch
         id: delete-branch
         continue-on-error: true
-        uses: neondatabase/delete-branch-action@v2
+        uses: neondatabase/delete-branch-by-name-action@main
         with:
           project_id: ${{ secrets.NEON_PROJECT_ID }}
-          branch_id: ${{ github.head_ref }}
+          branch_name: ${{ github.head_ref }}
           api_key: ${{ secrets.NEON_API_KEY }}
 
       - name: Comment on Pull Request (Failure)
