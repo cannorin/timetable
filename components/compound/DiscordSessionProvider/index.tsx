@@ -1,6 +1,6 @@
 import * as React from "react";
 import DiscordSessionProviderClient from "./client";
-import { auth } from "@/lib/discord";
+import { auth } from "@/lib/auth";
 
 export default async function DiscordSessionProvider({
   children,

@@ -25,13 +25,17 @@ export const config = {
           ...session.user,
           id: token.sub,
         };
-        await upsertDiscordUser(user);
         return {
           ...session,
           user,
         };
       }
       return session;
+    },
+  },
+  events: {
+    async signIn({ user, isNewUser }) {
+      if (isNewUser !== false) void upsertDiscordUser(user);
     },
   },
 } satisfies NextAuthOptions;

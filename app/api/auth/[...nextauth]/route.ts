@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { config } from "@/lib/discord";
+import { config } from "@/lib/auth";
 
 const handler = NextAuth(config);
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import LogInOutButton from "@/components/compound/LogInOutButton";
-import { auth } from "@/lib/discord";
+import { auth } from "@/lib/auth";
 
 export default async function Home() {
   const session = await auth();
