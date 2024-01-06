@@ -15,6 +15,12 @@ generator json {
   allowAny = false
 }
 
+generator zod {
+  provider                         = "npx zod-prisma-types"
+  createInputTypes                 = false
+  createOptionalDefaultValuesTypes = true
+}
+
 datasource db {
   provider  = "postgres"
   url       = env("DATABASE_URL")
@@ -37,6 +43,7 @@ enum TimetableState {
   ASSIGN
 }
 
+/// @zod.import(["import { RangeSchema } from '@/lib/types'"])
 model TimetableApplication {
   row     TimetableRow @relation(fields: [rowId, tableId], references: [id, tableId])
   rowId   String
@@ -46,7 +53,7 @@ model TimetableApplication {
   userId String
 
   /// [Range]
-  range Json
+  range Json /// @zod.custom.use(RangeSchema)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,6 +62,7 @@ model TimetableApplication {
   @@index([tableId, rowId, userId])
 }
 
+/// @zod.import(["import { SlotSchema } from '@/lib/types'"])
 model TimetableRow {
   id String @id @unique @default(cuid())
 
@@ -65,8 +73,9 @@ model TimetableRow {
   name  String
   start DateTime
   apps  TimetableApplication[]
+
   /// [Slot]
-  slots Json
+  slots Json /// @zod.custom.use(SlotSchema)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

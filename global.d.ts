@@ -1,4 +1,5 @@
 import type { DefaultSession } from "next-auth";
+import type { Range as RangeType, Slot as SlotType } from "./lib/types";
 
 declare module "next-auth" {
   interface Session {
@@ -8,20 +9,10 @@ declare module "next-auth" {
   }
 }
 
-type Branded<K, T> = K & { __brand: T };
-
-type Minute = Branded<number, "Minute">;
-
 declare global {
   namespace PrismaJson {
-    type Range = {
-      offset: Minute;
-      length: Minute;
-    };
+    type Range = RangeType;
 
-    type Slot = Range & {
-      name?: string | null;
-      discord_id?: string | null;
-    };
+    type Slot = SlotType;
   }
 }
