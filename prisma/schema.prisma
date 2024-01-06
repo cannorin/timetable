@@ -39,8 +39,8 @@ enum TimetableState {
 
 model TimetableApplication {
   row     TimetableRow @relation(fields: [rowId, tableId], references: [id, tableId])
-  rowId   Int
-  tableId Int
+  rowId   String
+  tableId String
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
@@ -56,10 +56,10 @@ model TimetableApplication {
 }
 
 model TimetableRow {
-  id Int @id @unique @default(autoincrement())
+  id String @id @unique @default(cuid())
 
   table   Timetable @relation(fields: [tableId, userId], references: [id, userId])
-  tableId Int
+  tableId String
   userId  String
 
   name  String
@@ -76,7 +76,7 @@ model TimetableRow {
 }
 
 model Timetable {
-  id Int @id @unique @default(autoincrement())
+  id String @id @unique @default(cuid())
 
   user   User   @relation(fields: [userId], references: [id])
   userId String
