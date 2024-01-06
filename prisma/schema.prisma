@@ -16,7 +16,7 @@ generator json {
 }
 
 generator zod {
-  provider                         = "npx zod-prisma-types"
+  provider                         = "zod-prisma-types"
   createInputTypes                 = false
   createOptionalDefaultValuesTypes = true
 }
