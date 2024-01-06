@@ -91,7 +91,7 @@ model Timetable {
   userId String
 
   name        String
-  description String
+  description String?
   state       TimetableState
   applyLimit  DateTime?
   rows        TimetableRow[] @relation

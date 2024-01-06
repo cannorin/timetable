@@ -15,5 +15,5 @@ export default async function Page({ params }: Params) {
 
   if (table.userId !== userId) redirect(`/table/${params.id}/`);
 
-  return <code>{JSON.stringify(table)}</code>;
+  return <code>{JSON.stringify(table, undefined, 2)}</code>;
 }

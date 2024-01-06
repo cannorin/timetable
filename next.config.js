@@ -9,8 +9,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    typedRoutes: true
-  }
+    typedRoutes: true,
+  },
 };
 
 module.exports = nextConfig;

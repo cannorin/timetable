@@ -1,6 +1,8 @@
 import Image from "next/image";
+
 import LogInOutButton from "@/components/compound/LogInOutButton";
 import { auth } from "@/lib/auth";
+import CreateEventDialog from "@/components/compound/CreateEventDialog";
 
 export default async function Home() {
   const session = await auth();
@@ -10,6 +12,7 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <section className="flex w-full max-w-5xl flex-col gap-5 p-10">
         <LogInOutButton />
+        <CreateEventDialog />
 
         {user && (
           <ul className="flex flex-col gap-1">
