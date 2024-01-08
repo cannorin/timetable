@@ -11,9 +11,9 @@ export default async function CreateEventDialog() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="flex max-w-48 flex-row items-center justify-center gap-2">
+          className="inline-flex items-center justify-center gap-2">
           <CalendarPlus className="h-4 w-4" />
-          Create new event
+          <span className="leading-[16px]">Create Event</span>
         </Button>
       </DialogTrigger>
 

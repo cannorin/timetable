@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import DiscordSessionProvider from "@/components/compound/DiscordSessionProvider";
+
+import DiscordSessionProvider from "@/components/util/DiscordSessionProvider";
+import Topbar from "@/components/compound/Topbar";
+import { ThemeProvider } from "@/components/util/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +21,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <DiscordSessionProvider>{children}</DiscordSessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange>
+          <DiscordSessionProvider>
+            <Topbar />
+            {children}
+          </DiscordSessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

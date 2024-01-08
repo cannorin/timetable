@@ -77,8 +77,10 @@ export default function CreateEventDialogClient() {
                 <FormControl>
                   <Input placeholder="New Event" {...field} />
                 </FormControl>
-                <FormDescription>Name of the event.</FormDescription>
-                <FormMessage />
+                <div className="flex flex-row gap-1">
+                  <FormDescription>Name of the event.</FormDescription>
+                  <FormMessage />
+                </div>
               </FormItem>
             )}
           />
@@ -108,6 +110,7 @@ export default function CreateEventDialogClient() {
           <DialogFooter>
             <Button
               type="submit"
+              variant="default"
               disabled={!!submitting}
               className="flex flex-row items-center justify-center gap-2">
               {submitting ? (
